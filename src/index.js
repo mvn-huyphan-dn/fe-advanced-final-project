@@ -7,18 +7,22 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import { ProvideAuth } from './components';
+import { Provider } from 'react-redux';
+import { store } from './app/store'
 
 const history = createBrowserHistory()
 
 ReactDOM.render(
-  <ProvideAuth>
-    <Router history={history}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Router>
-  </ProvideAuth>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <ProvideAuth>
+      <Router history={history}>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </Router>
+    </ProvideAuth>
+  </Provider>
+  , document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
