@@ -1,0 +1,17 @@
+.page-sidebar {
+  .sidebar-logo {
+    padding: 16px;
+    img {
+      height: 32px;
+    }
+  }
+  h1 {
+    color: map-get($colors, white);
+    font-size: f-pxRem(18);
+    margin: 0 0 0 24px;
+  }
+  .logout-item {
+    position: absolute;
+    bottom: 48px;
+  }
+}
