@@ -1,0 +1,10 @@
+.page-header {
+  background-color: map-get($colors, white) !important;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  border-bottom: 1px solid map-get($colors, black);
+  .left-blank-header {
+    flex: 1 1 0%;
+  }
+}
