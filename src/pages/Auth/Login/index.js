@@ -66,8 +66,8 @@ export default function LoginPage() {
                   placeholder="Input your username"
                 />
                 {errors.username &&
-                  <div class="ant-form-item-explain ant-form-item-explain-connected form-error">
-                    <div role="alert" class="ant-form-item-explain-error">{errors.username.message}</div>
+                  <div className="ant-form-item-explain ant-form-item-explain-connected form-error">
+                    <div role="alert" className="ant-form-item-explain-error">{errors.username.message}</div>
                   </div>
                 }
               </Form.Item>

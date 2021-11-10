@@ -1,0 +1,11 @@
+body {
+  position: relative;
+  .ant-tooltip-inner {
+    .menu-item-link {
+      color: map-get($colors, white);
+    }
+  }
+  .page-layout {
+    transition: all 0.2s;
+  }
+}
