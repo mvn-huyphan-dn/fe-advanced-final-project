@@ -1,0 +1,29 @@
+.page-dashboard {
+  .calendar-note {
+    font-size: f-pxRem(14);
+    span {
+      margin-left: 10px;
+    }
+  }
+  .calendar-note,
+  .calendar-navigation {
+    background: map-get($colors, white);
+  }
+  .calendar {
+    .cell-count {
+      margin-left: 20px;
+    }
+  }
+  .button-navi-list {
+    margin-bottom: 10px;
+    .button-wrapper {
+      width: 100%;
+      height: 100%;
+      .navi-button {
+        font-size: f-pxRem(28) !important;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
