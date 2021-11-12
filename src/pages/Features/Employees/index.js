@@ -1,14 +1,15 @@
-import { Button, Space, Table, Tooltip, PageHeader } from 'antd'
-import confirm from 'antd/lib/modal/confirm';
+import { Button, Space, Table, Tooltip, PageHeader, Modal } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { equipmentList, defaultEmployeeList, employeeJob, employeeGender, employeeStatus, defaultAvatar } from '../../../core/constants';
 import { useSelector, useDispatch } from "react-redux"
 import { getEmployeeList, deleteEmployee, deleteMultipleEmployees } from '../../../features/employee/employeeSlice';
 import { setLoadingTrue, setLoadingFalse } from '../../../features/loading/loadingSlice';
-import { GenerateTag } from '../../../utils';
+import { GenerateTag, openNotification } from '../../../utils';
 
 import dayjs from 'dayjs';
+
+const { confirm } = Modal
 
 export default function Employees() {
   const data = useSelector(state => state.employee.employeeList)
@@ -25,7 +26,7 @@ export default function Employees() {
 
   const handleDelete = (e) => {
     confirm({
-      title: 'Are you sure delete this employee?',
+      title: 'Are you sure you want to delete this employee?',
       content: 'Press YES button to remove item from database! This action cannot be undone',
       okText: 'Yes',
       okType: 'danger primary',
@@ -36,6 +37,7 @@ export default function Employees() {
           dispatch(deleteEmployee(e))
           dispatch(setLoadingFalse({}))
           if (selectedRowKeys.includes(e)) setSelectedRowKeys(selectedRowKeys.filter(a => a !== e))
+          openNotification('success', null, 'Delete employee successfully!!!')
         }, 2000);
       },
     });
@@ -170,7 +172,7 @@ export default function Employees() {
   const hasSelected = selectedRowKeys.length > 0;
   const handleDeleteMultiple = (e) => {
     confirm({
-      title: 'Are you sure delete these employees?',
+      title: 'Are you sure you want to delete these employees?',
       content: 'Press YES button to remove items from database! This action cannot be undone',
       okText: 'Yes',
       okType: 'danger primary',
@@ -181,6 +183,7 @@ export default function Employees() {
           dispatch(deleteMultipleEmployees(e))
           dispatch(setLoadingFalse({}))
           setSelectedRowKeys([])
+          openNotification('success', null, 'Delete employees successfully!!!')
         }, 2000);
       },
     });

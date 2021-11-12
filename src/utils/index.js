@@ -5,11 +5,13 @@ import {
   disabledWorkAge
 } from './dateRules'
 import GenerateTag from './generateTag'
+import { openNotification } from './openNotification'
 
 export {
   randomId,
   disabledStartDate,
   disabledEndDate,
   disabledWorkAge,
-  GenerateTag
+  GenerateTag,
+  openNotification
 }

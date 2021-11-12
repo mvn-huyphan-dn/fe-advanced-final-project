@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col, Checkbox, Radio, Select, PageHeader, Upload, Spin } from 'antd';
+import { Form, Input, Button, Row, Col, Checkbox, Radio, Select, PageHeader, Upload, Spin, Modal } from 'antd';
 import dayjs from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
 import { DatePicker } from '../../../components'
@@ -9,7 +9,8 @@ import {
 import {
   disabledStartDate,
   disabledEndDate,
-  disabledWorkAge
+  disabledWorkAge,
+  openNotification
 } from '../../../utils'
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
@@ -20,6 +21,7 @@ import { useHistory } from 'react-router';
 import { setLoadingFalse, setLoadingTrue } from '../../../features/loading/loadingSlice';
 
 const { Option } = Select;
+const { confirm } = Modal;
 
 export default function EditEmployee() {
   const loading = useSelector(state => state.loading.loading)
@@ -64,27 +66,37 @@ export default function EditEmployee() {
   }
 
   const onSubmit = (obj) => {
-    const data = JSON.parse(JSON.stringify(obj))
-    data.id = +employee.id
-    if (!url) {
-      data.avatar = ''
-    } else if (!url.includes("data:image/png;base64,")) {
-      data.avatar = "data:image/png;base64," + url;
-    } else data.avatar = url;
-    data.birth = dayjs(obj.birth).format(birthFormat)
+    confirm({
+      title: 'Are you sure you want to save this information?',
+      content: 'Press YES button to save this information to database! This action cannot be undone',
+      okText: 'Yes',
+      okType: 'primary',
+      cancelText: 'No',
+      onOk() {
+        const data = JSON.parse(JSON.stringify(obj))
+        data.id = +employee.id
+        if (!url) {
+          data.avatar = ''
+        } else if (!url.includes("data:image/png;base64,")) {
+          data.avatar = "data:image/png;base64," + url;
+        } else data.avatar = url;
+        data.birth = dayjs(obj.birth).format(birthFormat)
 
-    if (obj.status !== 3) {
-      data.startDate = ""
-      data.endDate = ""
-      dispatch(editEmployee(data))
-    } else {
-      const timeStartDate = obj.startDate.hour(7).minute(0).second(0).millisecond(0)
-      const timeEndDate = obj.endDate.hour(7).minute(0).second(0).millisecond(0)
-      data.startDate = dayjs(timeStartDate).format(dateFormat)
-      data.endDate = dayjs(timeEndDate).format(dateFormat)
-      dispatch(editEmployee(data))
-    }
-    history.replace('/employees')
+        if (obj.status !== 3) {
+          data.startDate = ""
+          data.endDate = ""
+          dispatch(editEmployee(data))
+        } else {
+          const timeStartDate = obj.startDate.hour(7).minute(0).second(0).millisecond(0)
+          const timeEndDate = obj.endDate.hour(7).minute(0).second(0).millisecond(0)
+          data.startDate = dayjs(timeStartDate).format(dateFormat)
+          data.endDate = dayjs(timeEndDate).format(dateFormat)
+          dispatch(editEmployee(data))
+        }
+        openNotification('success', null, 'Edit employee successfully!!!')
+        history.replace('/employees')
+      },
+    });
   }
 
   const removeUploadAvatar = () => {
@@ -367,7 +379,6 @@ export default function EditEmployee() {
                     Save
                   </Button>
                 </div>
-
               </Form.Item>
             </form>
           </Col>

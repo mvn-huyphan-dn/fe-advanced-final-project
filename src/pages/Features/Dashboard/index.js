@@ -128,6 +128,7 @@ export default function Dashboard() {
         className='calendar'
         dateCellRender={dateCellRender}
         monthCellRender={monthCellRender}
+        validRange={[dayjs().subtract(2, 'year').set('date', 1).set('month', 1), dayjs().add(2, 'year').set('date', 31).set('month', 12)]}
       />
     </div>
   )

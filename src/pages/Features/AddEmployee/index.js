@@ -11,6 +11,7 @@ import {
   disabledStartDate,
   disabledEndDate,
   disabledWorkAge,
+  openNotification,
 } from '../../../utils'
 import { useDispatch } from "react-redux"
 import { getEmployeeList, addEmployee } from '../../../features/employee/employeeSlice';
@@ -56,7 +57,6 @@ export default function AddEmployee() {
     if (obj.status !== 3) {
       data.startDate = ""
       data.endDate = ""
-      console.log(data)
       dispatch(addEmployee(data))
     } else {
       const timeStartDate = obj.startDate.hour(7).minute(0).second(0).millisecond(0)
@@ -65,6 +65,7 @@ export default function AddEmployee() {
       data.endDate = dayjs(timeEndDate).format(dateFormat)
       dispatch(addEmployee(data))
     }
+    openNotification('success', null, 'Add employee successfully!!!')
     history.replace('/employees')
   }
 
