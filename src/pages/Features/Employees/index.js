@@ -1,4 +1,4 @@
-import { Button, Space, Table, Tag, Tooltip, PageHeader } from 'antd'
+import { Button, Space, Table, Tooltip, PageHeader } from 'antd'
 import confirm from 'antd/lib/modal/confirm';
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { equipmentList, defaultEmployeeList, employeeJob, employeeGender, employ
 import { useSelector, useDispatch } from "react-redux"
 import { getEmployeeList, deleteEmployee, deleteMultipleEmployees } from '../../../features/employee/employeeSlice';
 import { setLoadingTrue, setLoadingFalse } from '../../../features/loading/loadingSlice';
+import { GenerateTag } from '../../../utils';
 
 import dayjs from 'dayjs';
 
@@ -30,7 +31,7 @@ export default function Employees() {
       okType: 'danger primary',
       cancelText: 'No',
       onOk() {
-        dispatch(setLoadingTrue({tip: 'Loading database...'}))
+        dispatch(setLoadingTrue({ tip: 'Loading database...' }))
         setTimeout(() => {
           dispatch(deleteEmployee(e))
           dispatch(setLoadingFalse({}))
@@ -109,23 +110,8 @@ export default function Employees() {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: obj => {
-        let color = '';
-        switch (employeeStatus[employeeStatus.findIndex(e => e.id === obj)]["name"]) {
-          case 'NEW':
-            color = 'green'
-            break;
-          case 'VACATION':
-            color = 'red'
-            break;
-          default:
-            color = 'yellow'
-            break;
-        }
-        return <Tag color={color}>
-          {employeeStatus[employeeStatus.findIndex(e => e.id === obj)]["name"]}
-        </Tag>
-      }
+      render: obj =>
+        obj ? GenerateTag(employeeStatus[employeeStatus.findIndex(e => e.id === obj)]["name"]) : ""
       ,
       sorter: (a, b) => a.status - b.status,
       filters: [
