@@ -1,5 +1,5 @@
 import { Switch, Route, Redirect } from "react-router";
-import { Layout } from "antd";
+import { Layout, Spin } from "antd";
 import { CustomFooter, CustomHeader, SideBar } from "../components";
 import { useAuth } from "../hooks";
 import { useHistory } from "react-router";
@@ -12,7 +12,7 @@ import {
   EditEmployee,
   EmployeeDetail
 } from './Features'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -53,25 +53,32 @@ export default function Pages() {
           <CustomHeader logout={logout} />
         </Header>
         <Content className='page-content'>
-          <Switch>
-            <PrivateRoute exact path='/'>
-              <Dashboard />
-            </PrivateRoute>
-            <PrivateRoute path='/employees/:employeeId'>
-              <EmployeeDetail />
-            </PrivateRoute>
-            <PrivateRoute path='/employees'>
-              <Employees />
-            </PrivateRoute>
-            <PrivateRoute path='/add-employee'>
-              <AddEmployee />
-            </PrivateRoute>
-            <PrivateRoute path='/edit-employee/:employeeId'>
-              <EditEmployee />
-            </PrivateRoute>
-            <Route path='/404' component={NotFound} />
-            <Redirect from='/*' to='/404' />
-          </Switch>
+          <Suspense
+            fallback={
+              <div className='page-loading flex-center' style={{ minHeight: '100vh' }}>
+                <Spin tip='Loading...'/>
+              </div>
+            }>
+            <Switch>
+              <PrivateRoute exact path='/'>
+                <Dashboard />
+              </PrivateRoute>
+              <PrivateRoute path='/employees/:employeeId'>
+                <EmployeeDetail />
+              </PrivateRoute>
+              <PrivateRoute path='/employees'>
+                <Employees />
+              </PrivateRoute>
+              <PrivateRoute path='/add-employee'>
+                <AddEmployee />
+              </PrivateRoute>
+              <PrivateRoute path='/edit-employee/:employeeId'>
+                <EditEmployee />
+              </PrivateRoute>
+              <Route path='/404' component={NotFound} />
+              <Redirect from='/*' to='/404' />
+            </Switch>
+          </Suspense>
         </Content>
         <Footer className='page-footer'>
           <CustomFooter />

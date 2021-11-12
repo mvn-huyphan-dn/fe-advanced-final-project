@@ -1,9 +1,12 @@
-import NotFound from './NotFound'
-import Employees from './Employees'
-import Dashboard from './Dashboard'
-import AddEmployee from './AddEmployee'
-import EditEmployee from './EditEmployee'
-import EmployeeDetail from './EmployeeDetail'
+import { lazy } from 'react'
+import Dashboard from './Dashboard';
+
+const NotFound = lazy(() => import('./NotFound'));
+const Employees = lazy(() => import('./Employees'));
+const AddEmployee = lazy(() => import('./AddEmployee'));
+const EditEmployee = lazy(() => import('./EditEmployee'));
+const EmployeeDetail = lazy(() => import('./EmployeeDetail'));
+
 
 export {
   NotFound,
