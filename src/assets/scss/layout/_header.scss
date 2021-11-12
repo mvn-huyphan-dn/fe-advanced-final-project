@@ -1,10 +1,14 @@
 .page-header {
   background-color: map-get($colors, white) !important;
   position: fixed;
+  top: 0;
   z-index: 1;
-  width: 100%;
   border-bottom: 1px solid map-get($colors, black);
-  .left-blank-header {
-    flex: 1 1 0%;
+  width: 100%;
+  .header-right-panel {
+    margin-left: auto;
+    .span-user-name {
+      margin-left: 20px;
+    }
   }
 }

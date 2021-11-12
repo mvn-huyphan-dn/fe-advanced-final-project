@@ -7,5 +7,12 @@ body {
   }
   .page-layout {
     transition: all 0.2s;
+    position: relative;
+    .pr-130 {
+      padding-right: 130px !important;
+    }
+    .pr-250 {
+      padding-right: 250px !important;
+    }
   }
 }

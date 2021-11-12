@@ -1,10 +1,9 @@
 import { Menu } from 'antd'
-import { AiOutlineUser, AiOutlineDashboard, AiOutlineLogout } from 'react-icons/ai'
+import { AiOutlineUser, AiOutlineDashboard, AiOutlineLogout, AiOutlineUserAdd } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/images/monstarlablogo.jpg'
 
 export default function SideBar(props) {
-
   return (
     <>
       <div className="sidebar-logo flex-center">
@@ -18,7 +17,14 @@ export default function SideBar(props) {
           <Link to='/' className='menu-item-link'>Home</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<AiOutlineUser />}>
-          <Link to='/employees' className='menu-item-link'>Employees</Link>
+          <Link to='/employees' className='menu-item-link'>
+            List Employees
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="3" icon={<AiOutlineUserAdd />}>
+          <Link to='/add-employee' className='menu-item-link'>
+            Add Employee
+          </Link>
         </Menu.Item>
       </Menu>
       <Menu theme="dark" mode="inline" className='logout-item'>
