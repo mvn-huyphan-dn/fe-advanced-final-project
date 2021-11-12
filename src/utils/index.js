@@ -4,10 +4,12 @@ import {
   disabledEndDate,
   disabledWorkAge
 } from './dateRules'
+import GenerateTag from './generateTag'
 
 export {
   randomId,
   disabledStartDate,
   disabledEndDate,
-  disabledWorkAge
+  disabledWorkAge,
+  GenerateTag
 }

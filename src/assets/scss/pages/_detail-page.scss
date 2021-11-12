@@ -1,0 +1,31 @@
+.page-employee-detail {
+  min-height: 100%;
+  .card-employee {
+    width: 60%;
+  }
+  .card-cover {
+    padding: 20px;
+    .cover-avatar-wrapper {
+      padding: 10px;
+      border: 1px solid map-get($colors, black);
+    }
+  }
+  .cover-description {
+    .item-description {
+      margin-left: 50px;
+    }
+  }
+  .ant-tabs-nav-wrap {
+    justify-content: center;
+    .ant-tabs-nav-list {
+      justify-content: center;
+    }
+  }
+  .equipment-tab {
+    width: 100%;
+    img {
+      width: 200px;
+      height: 200px;
+    }
+  }
+}
