@@ -13,6 +13,7 @@ import {
   EmployeeDetail
 } from './Features'
 import { Suspense, useState } from 'react'
+import { openNotification } from "../utils";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -23,6 +24,7 @@ export default function Pages() {
   let logout = () => {
     auth.signout(() => {
       localStorage.removeItem('user')
+      openNotification('success', null, 'You have logged out')
       history.replace('/login')
     })
   }

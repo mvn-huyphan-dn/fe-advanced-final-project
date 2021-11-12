@@ -6,6 +6,7 @@ import { useHistory, useLocation } from "react-router";
 import { useAuth } from '../../../hooks';
 import { useEffect } from 'react';
 import { fakeAuth } from '../../../core/services';
+import { openNotification } from '../../../utils';
 
 export default function Login() {
   const { control, handleSubmit, formState: { errors } } = useForm();
@@ -18,6 +19,7 @@ export default function Login() {
 
   let login = () => {
     auth.signin(() => {
+      openNotification('success', null, 'You have loggedin successfully!!!')
       history.replace(from);
     });
   };
@@ -34,7 +36,7 @@ export default function Login() {
       fakeAuth.isAuthenticated = true;
       history.replace(from);
     }
-  //eslint-disable-next-line
+    //eslint-disable-next-line
   }, [])
 
   return (
