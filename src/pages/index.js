@@ -56,7 +56,7 @@ export default function Pages() {
           <Suspense
             fallback={
               <div className='page-loading flex-center' style={{ minHeight: '100vh' }}>
-                <Spin tip='Loading...'/>
+                <Spin tip='Loading...' />
               </div>
             }>
             <Switch>

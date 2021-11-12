@@ -99,7 +99,7 @@ export default function EditEmployee() {
         title='EDIT EMPLOYEE'>
       </PageHeader>
       {Object.keys(employee).length === 0 || !employee ?
-        <div className='flex-center loading-wrapper' style={{ 'minHeight': '100%' }}>
+        <div className='flex-center loading-wrapper'>
           <Spin spinning={loading.loading} tip={loading.tip} />
         </div>
         :
