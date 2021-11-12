@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { defaultEmployeeList } from './core/constants';
 
 function App() {
-  
+
   useEffect(() => {
     let employeeData = localStorage.getItem('employee');
     if (!employeeData) localStorage.setItem('employee', JSON.stringify(defaultEmployeeList))

@@ -359,9 +359,15 @@ export default function EditEmployee() {
                 label=""
                 wrapperCol={{ offset: 4, span: 20 }}
                 className='submit-button-wrapper'>
-                <Button type="primary" htmlType="submit" className='submit-button'>
-                  Save
-                </Button>
+                <div className='action-group-button'>
+                  <Button danger type="primary" htmlType="button" className='cancel-button' onClick={() => history.goBack()}>
+                    Cancel
+                  </Button>
+                  <Button type="primary" htmlType="submit" className='submit-button'>
+                    Save
+                  </Button>
+                </div>
+
               </Form.Item>
             </form>
           </Col>

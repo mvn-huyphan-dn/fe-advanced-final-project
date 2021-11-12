@@ -1,6 +1,6 @@
 import { Switch, Route, Redirect } from "react-router";
 import { Layout } from "antd";
-import { CustomHeader, SideBar } from "../components";
+import { CustomFooter, CustomHeader, SideBar } from "../components";
 import { useAuth } from "../hooks";
 import { useHistory } from "react-router";
 import PrivateRoute from '../core/guards/PrivateRoute'
@@ -49,8 +49,8 @@ export default function Pages() {
       <Layout className='page-layout'
         style={{ marginLeft: collapsed ? '80px' : '200px' }}
       >
-        <Header className='page-header'>
-          <CustomHeader />
+        <Header className={`page-header flex ${collapsed ? `pr-130` : `pr-250`}`}>
+          <CustomHeader logout={logout} />
         </Header>
         <Content className='page-content'>
           <Switch>
@@ -73,7 +73,9 @@ export default function Pages() {
             <Redirect from='/*' to='/404' />
           </Switch>
         </Content>
-        <Footer className='page-footer'>Footer</Footer>
+        <Footer className='page-footer'>
+          <CustomFooter />
+        </Footer>
       </Layout>
     </Layout>
   )
