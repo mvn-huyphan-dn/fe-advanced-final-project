@@ -7,7 +7,7 @@ import { useAuth } from '../../../hooks';
 import { useEffect } from 'react';
 import { fakeAuth } from '../../../core/services';
 
-export default function LoginPage() {
+export default function Login() {
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   let history = useHistory();

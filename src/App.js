@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router';
 import './App.css';
-import { LoginPage } from './pages/Auth';
+import { Login } from './pages/Auth';
 import PrivateRoute from './core/guards/PrivateRoute'
 import Pages from './pages';
 import { useEffect } from "react";
@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route path='/login'>
-          <LoginPage />
+          <Login />
         </Route>
         <PrivateRoute>
           <Pages />
