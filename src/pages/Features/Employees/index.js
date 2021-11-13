@@ -335,10 +335,10 @@ export default function Employees() {
                 placeholder="Search Name"
                 value={searchValue}
                 onChange={e => {
-                  const currValue = e.target.value;
-                  setSearchValue(currValue);
+                  const currentValue = e.target.value;
+                  setSearchValue(currentValue);
                   const filteredData = data.filter(entry =>
-                    entry.name.includes(currValue)
+                    entry.name.includes(currentValue)
                   );
                   setDataSearch(filteredData);
                 }}

@@ -19,7 +19,7 @@ export default function Login() {
 
   let login = () => {
     auth.signin(() => {
-      openNotification('success', null, 'You have loggedin successfully!!!')
+      openNotification('success', null, 'You have logged in successfully!!!')
       history.replace(from);
     });
   };
