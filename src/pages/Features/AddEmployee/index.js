@@ -130,6 +130,36 @@ export default function AddEmployee() {
             </Form.Item>
 
             <Form.Item
+              label="Email"
+              labelAlign='left'
+              labelCol={{ span: 4 }}
+              wrapperCol={{ span: 20 }}
+              className={`${!errors.email ? 'ant-form-item-has-success' : 'ant-form-item-with-help ant-form-item-has-error'}`}>
+              <Controller
+                name="email"
+                defaultValue=""
+                control={control}
+                rules={{
+                  required: "This field can't be empty",
+                  pattern: {
+                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: 'Please input valid email'
+                  }
+                }}
+                render={({ field }) => (
+                  <div className='flex flex-column custom-input'>
+                    <Input
+                      {...field}
+                      placeholder='Input employee email' />
+                    {errors.email &&
+                      <div className="ant-form-item-explain ant-form-item-explain-connected form-error-text">
+                        <div role="alert" className="ant-form-item-explain-error">{errors.email.message}</div>
+                      </div>}
+                  </div>
+                )} />
+            </Form.Item>
+
+            <Form.Item
               label="Birth"
               labelAlign='left'
               labelCol={{ span: 4 }}

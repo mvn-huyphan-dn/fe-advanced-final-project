@@ -43,6 +43,8 @@ export default function Employees() {
     });
   }
 
+
+
   const columns = [
     {
       title: 'Avatar',
@@ -52,7 +54,7 @@ export default function Employees() {
         <div className='avatar-table-wrapper flex-center'>
           {obj ? <img src={obj} alt='avatar' />
             : <img src={defaultAvatar} alt='avatar' />}
-        </div>
+        </div>,
     },
     {
       title: 'Name',
@@ -71,6 +73,12 @@ export default function Employees() {
         { text: 'Female', value: 2 }
       ],
       onFilter: (value, record) => record.gender === value,
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+      sorter: (a, b) => a.email.length - b.email.length,
     },
     {
       title: 'Birth',
@@ -266,7 +274,6 @@ export default function Employees() {
 
           </div>}
         expandable={{
-          // expandRowByClick: true,
           expandedRowRender: record => <p className='vacation-period'>Going vacation from {record.startDate} to {record.endDate}</p>,
           rowExpandable: record => record.status === 3,
         }}

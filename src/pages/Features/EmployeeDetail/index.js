@@ -1,4 +1,4 @@
-import { Card, Avatar, List, Divider, PageHeader } from 'antd';
+import { Card, Avatar, List, Divider, PageHeader, Row, Col } from 'antd';
 import { useParams } from 'react-router';
 import { AiOutlineEdit } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
@@ -114,6 +114,7 @@ export default function EmployeeDetail() {
               return (
                 <List.Item>
                   <Card
+                    className='equipment-wrapper'
                     cover={
                       <img
                         alt="equipment cover"
@@ -150,29 +151,39 @@ export default function EmployeeDetail() {
             avatar={
               <Avatar
                 className='cover-avatar-wrapper'
-                src={employee.avatar? employee.avatar: defaultAvatar}
+                src={employee.avatar ? employee.avatar : defaultAvatar}
                 shape="square"
                 size={200} />
             }
             description={
               <div
                 className='cover-description'>
-                <List.Item.Meta
-                  title={<div className='item-title'>Name: </div>}
-                  description={<div className='item-description'>{employee.name}</div>}
-                />
-                <List.Item.Meta
-                  title={<div className='item-title'>Birth: </div>}
-                  description={<div className='item-description'>{employee.birth} </div>}
-                />
-                <List.Item.Meta
-                  title={<div className='item-title'>Gender:  </div>}
-                  description={
-                    <div className='item-description'>
-                      {employee.gender ? employeeGender[employeeGender.findIndex(e => e.id === employee.gender)]["name"] : ""}
-                    </div>
-                  }
-                />
+                <Row>
+                  <Col span={12}>
+                    <List.Item.Meta
+                      title={<div className='item-title'>Name: </div>}
+                      description={<div className='item-description'>{employee.name}</div>}
+                    />
+                    <List.Item.Meta
+                      title={<div className='item-title'>Birth: </div>}
+                      description={<div className='item-description'>{employee.birth} </div>}
+                    />
+                    <List.Item.Meta
+                      title={<div className='item-title'>Gender:  </div>}
+                      description={
+                        <div className='item-description'>
+                          {employee.gender ? employeeGender[employeeGender.findIndex(e => e.id === employee.gender)]["name"] : ""}
+                        </div>
+                      }
+                    />
+                  </Col>
+                  <Col span={12}>
+                    <List.Item.Meta
+                      title={<div className='item-title'>Email: </div>}
+                      description={<div className='item-description'>{employee.email}</div>}
+                    />
+                  </Col>
+                </Row>
               </div>
             }
           />
