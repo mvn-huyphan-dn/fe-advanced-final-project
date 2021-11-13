@@ -28,4 +28,10 @@
       height: 200px;
     }
   }
+  .equipment-wrapper {
+    .ant-card-cover {
+      padding: 10px;
+      border: 1px solid map-get($colors, black);
+    }
+  }
 }
