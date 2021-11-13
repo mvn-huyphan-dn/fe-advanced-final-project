@@ -18,7 +18,7 @@
     }
   }
   .number-span {
-    margin-left: 8px;
+    margin: 0 10px;
   }
   .vacation-period {
     margin-bottom: 0;
@@ -28,7 +28,10 @@
     margin-left: auto;
   }
   .avatar-table-wrapper {
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
+    img {
+      object-fit: contain;
+    }
   }
 }
