@@ -5,7 +5,6 @@ import dayjs from "dayjs"
 import React, { useEffect } from 'react'
 import { getEmployeeList } from '../../../features/employee/employeeSlice';
 import { setLoadingFalse } from '../../../features/loading/loadingSlice';
-import { birthFormat, dateFormat } from "../../../core/constants"
 import { AiOutlineUnorderedList, AiOutlineUserAdd } from 'react-icons/ai'
 import { HiOutlineCake, HiOutlineOfficeBuilding } from "react-icons/hi";
 import { IoAirplaneOutline } from "react-icons/io5";
@@ -24,31 +23,26 @@ export default function Dashboard() {
 
   function getListData(value) {
     let listData;
-    const dayInMonth = dayjs().daysInMonth()
-    for (let i = 0; i <= 11; i++) {
-      for (let j = 1; j <= dayInMonth; j++) {
-        if (value.month() === i && value.date() === j) {
-          let birth = [];
-          let listStartVacation = []
-          let listEndVacation = []
-          employeeData.forEach(item => {
-            if (dayjs(item.birth, birthFormat).day() === j
-              && dayjs(item.birth, birthFormat).month() === i)
-              birth.push(item.id);
-            if (dayjs(item.startDate, dateFormat).day() === j
-              && dayjs(item.startDate, dateFormat).month() === i)
-              listStartVacation.push(item.id)
-            if (dayjs(item.endDate, dateFormat).day() === j
-              && dayjs(item.startDate, dateFormat).month() === i)
-              listEndVacation.push(item.id)
-          })
-          listData = {
-            birth,
-            listStartVacation,
-            listEndVacation
-          }
-        }
-      }
+    let birth = [];
+    let listStartVacation = []
+    let listEndVacation = []
+    employeeData.forEach(item => {
+      if (dayjs(item.birth).get('date') === value.date()
+        && dayjs(item.birth).get('month') === value.month())
+        birth.push(item.id);
+      if (dayjs(item.startDate).get('date') === value.date()
+        && dayjs(item.startDate).get('month') === value.month()
+        && dayjs(item.startDate).get('year') === value.year())
+        listStartVacation.push(item.id)
+      if (dayjs(item.endDate).get('date') === value.date()
+        && dayjs(item.endDate).get('month') === value.month()
+        && dayjs(item.endDate).get('year') === value.year())
+        listEndVacation.push(item.id)
+    })
+    listData = {
+      birth,
+      listStartVacation,
+      listEndVacation
     }
     return listData || {};
   }
@@ -60,13 +54,46 @@ export default function Dashboard() {
         {listData ?
           <>
             {listData.birth && listData.birth.length ?
-              <li className='flex align-center'><HiOutlineCake /> <span className='cell-count'>{listData.birth.length}</span> </li>
+              <Tooltip
+                placement='top'
+                color='blue'
+                title={
+                  listData.birth.map(e => {
+                    return (
+                      <div key={`birth-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
+                    )
+                  })
+                }>
+                <li className='flex align-center'><HiOutlineCake /> <span className='cell-count'>{listData.birth.length}</span> </li>
+              </Tooltip>
               : null}
             {listData.listStartVacation && listData.listStartVacation.length ?
-              <li className='flex align-center'><IoAirplaneOutline /> <span className='cell-count'>{listData.listStartVacation.length}</span> </li>
+              <Tooltip
+                placement='top'
+                color='red'
+                title={
+                  listData.listStartVacation.map(e => {
+                    return (
+                      <div key={`start-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
+                    )
+                  })
+                }>
+                <li className='flex align-center'><IoAirplaneOutline /> <span className='cell-count'>{listData.listStartVacation.length}</span> </li>
+              </Tooltip>
               : null}
             {listData.listEndVacation && listData.listEndVacation.length ?
-              <li className='flex align-center'><HiOutlineOfficeBuilding /> <span className='cell-count'>{listData.listEndVacation.length}</span>  </li>
+              <Tooltip
+                placement='top'
+                color='green'
+                title={
+                  listData.listEndVacation.map(e => {
+                    return (
+                      <div key={`end-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
+                    )
+                  })
+                }>
+                <li className='flex align-center'><HiOutlineOfficeBuilding /> <span className='cell-count'>{listData.listEndVacation.length}</span> </li>
+              </Tooltip>
               : null}
           </>
           :
@@ -128,7 +155,6 @@ export default function Dashboard() {
         className='calendar'
         dateCellRender={dateCellRender}
         monthCellRender={monthCellRender}
-        validRange={[dayjs().subtract(2, 'year').set('date', 1).set('month', 1), dayjs().add(2, 'year').set('date', 31).set('month', 12)]}
       />
     </div>
   )
