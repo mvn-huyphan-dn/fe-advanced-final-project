@@ -23,15 +23,17 @@
   }
   .equipment-tab {
     width: 100%;
+  }
+  .ant-card-cover {
+    padding: 10px;
+    border: 1px solid map-get($colors, black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img {
       width: 200px;
       height: 200px;
-    }
-  }
-  .equipment-wrapper {
-    .ant-card-cover {
-      padding: 10px;
-      border: 1px solid map-get($colors, black);
+      object-fit: contain;
     }
   }
 }

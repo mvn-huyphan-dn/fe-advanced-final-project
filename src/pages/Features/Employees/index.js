@@ -1,7 +1,15 @@
-import { Button, Space, Table, Tooltip, PageHeader, Modal } from 'antd'
+import { Button, Space, Table, Tooltip, PageHeader, Modal, Input } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { equipmentList, defaultEmployeeList, employeeJob, employeeGender, employeeStatus, defaultAvatar } from '../../../core/constants';
+import {
+  equipmentList,
+  defaultEmployeeList,
+  employeeJob,
+  employeeGender,
+  employeeStatus,
+  defaultAvatar,
+  dateFormat
+} from '../../../core/constants';
 import { useSelector, useDispatch } from "react-redux"
 import { getEmployeeList, deleteEmployee, deleteMultipleEmployees } from '../../../features/employee/employeeSlice';
 import { setLoadingTrue, setLoadingFalse } from '../../../features/loading/loadingSlice';
@@ -43,7 +51,36 @@ export default function Employees() {
     });
   }
 
+  const [tableParams, setTableParams] = useState({
+    filteredInfo: null, sortedInfo: {
+      order: 'descend',
+      columnKey: 'updatedAt',
+    }
+  })
+  const handleChange = (pagination, filters, sorter) => {
+    setTableParams({
+      filteredInfo: filters,
+      sortedInfo: sorter,
+    });
+  };
 
+  const clearFilters = () => {
+    const remainSorted = JSON.parse(JSON.stringify(tableParams.sortedInfo))
+    setTableParams({ filteredInfo: null, sortedInfo: remainSorted })
+  }
+
+  const clearAll = () => {
+    setTableParams({ filteredInfo: null, sortedInfo: null })
+  }
+
+  const latestUpdate = () => {
+    setTableParams({
+      sortedInfo: {
+        order: 'descend',
+        columnKey: 'updatedAt',
+      }
+    })
+  }
 
   const columns = [
     {
@@ -61,6 +98,7 @@ export default function Employees() {
       dataIndex: 'name',
       key: 'name',
       sorter: (a, b) => a.name.length - b.name.length,
+      sortOrder: tableParams.sortedInfo ? tableParams.sortedInfo.columnKey === 'name' && tableParams.sortedInfo.order : "",
     },
     {
       title: 'Gender',
@@ -73,12 +111,16 @@ export default function Employees() {
         { text: 'Female', value: 2 }
       ],
       onFilter: (value, record) => record.gender === value,
+      filteredValue: tableParams.filteredInfo ? tableParams.filteredInfo.gender || null : null,
+      sortOrder: tableParams.sortedInfo ? tableParams.sortedInfo.columnKey === 'gender' && tableParams.sortedInfo.order : "",
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
       sorter: (a, b) => a.email.length - b.email.length,
+      filteredValue: tableParams.filteredInfo ? tableParams.filteredInfo.email || null : {},
+      sortOrder: tableParams.sortedInfo ? tableParams.sortedInfo.columnKey === 'email' && tableParams.sortedInfo.order : "",
     },
     {
       title: 'Birth',
@@ -100,6 +142,8 @@ export default function Employees() {
         { text: 'December', value: 11 },
       ],
       onFilter: (value, record) => dayjs(record.birth).get('month') === value,
+      filteredValue: tableParams.filteredInfo ? tableParams.filteredInfo.birth || null : null,
+      sortOrder: tableParams.sortedInfo ? tableParams.sortedInfo.columnKey === 'birth' && tableParams.sortedInfo.order : "",
     },
     {
       title: 'Job',
@@ -115,6 +159,8 @@ export default function Employees() {
         { text: 'QC & Tester Engineer', value: 5 }
       ],
       onFilter: (value, record) => record.job === value,
+      filteredValue: tableParams.filteredInfo ? tableParams.filteredInfo.job || null : null,
+      sortOrder: tableParams.sortedInfo ? tableParams.sortedInfo.columnKey === 'job' && tableParams.sortedInfo.order : "",
     },
     {
       title: 'Status',
@@ -130,6 +176,8 @@ export default function Employees() {
         { text: 'VACATION', value: 3 },
       ],
       onFilter: (value, record) => record.status === value,
+      filteredValue: tableParams.filteredInfo ? tableParams.filteredInfo.status || null : null,
+      sortOrder: tableParams.sortedInfo ? tableParams.sortedInfo.columnKey === 'status' && tableParams.sortedInfo.order : "",
     },
     {
       title: 'Equipment',
@@ -155,6 +203,18 @@ export default function Employees() {
           </Link>
           <Button danger type='primary' onClick={() => handleDelete(record.id)}>Delete</Button>
         </Space>
+    },
+    {
+      title: "",
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      render: obj => <div key={`u-${obj}`}
+        style={{ display: 'none' }}
+      ></div>,
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => dayjs(a.updatedAt, dateFormat) - dayjs(b.updatedAt, dateFormat),
+      ellipsis: false,
+      sortOrder: tableParams.sortedInfo ? tableParams.sortedInfo.columnKey === 'updatedAt' && tableParams.sortedInfo.order : "",
     }
   ];
 
@@ -202,6 +262,9 @@ export default function Employees() {
     dispatch(getEmployeeList({}))
   }
 
+  const [searchValue, setSearchValue] = useState('')
+  const [dataSearch, setDataSearch] = useState([])
+
   return (
     <div className='page-employees'>
       <div className='div-wrapper flex'>
@@ -234,7 +297,7 @@ export default function Employees() {
         </div>
       </div>
       <Table
-        dataSource={data}
+        dataSource={dataSearch && dataSearch.length ? dataSearch : data}
         columns={columns}
         rowKey={(record) => record.id}
         pagination={{
@@ -253,7 +316,7 @@ export default function Employees() {
         })
         }
         title={() =>
-          <div className='prop-list flex'>
+          <div className='prop-list flex-center'>
             <Button
               danger
               type="primary"
@@ -264,6 +327,23 @@ export default function Employees() {
             <span className='number-span flex-center'>
               {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
             </span>
+            <Space className='params-group-button flex-center'>
+              <Button onClick={latestUpdate}>Sort latest update</Button>
+              <Button onClick={clearFilters}>Clear filters</Button>
+              <Button onClick={clearAll}>Clear filters and sorters</Button>
+              <Input
+                placeholder="Search Name"
+                value={searchValue}
+                onChange={e => {
+                  const currValue = e.target.value;
+                  setSearchValue(currValue);
+                  const filteredData = data.filter(entry =>
+                    entry.name.includes(currValue)
+                  );
+                  setDataSearch(filteredData);
+                }}
+              />
+            </Space>
             <Link to='/add-employee' className='add-button-wrapper'>
               <Button
                 type="primary"
@@ -277,6 +357,7 @@ export default function Employees() {
           expandedRowRender: record => <p className='vacation-period'>Going vacation from {record.startDate} to {record.endDate}</p>,
           rowExpandable: record => record.status === 3,
         }}
+        onChange={handleChange}
       />
     </div>
   )
