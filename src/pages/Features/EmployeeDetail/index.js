@@ -161,14 +161,17 @@ export default function EmployeeDetail() {
                 <Row>
                   <Col span={12}>
                     <List.Item.Meta
+                      className='list-item-description'
                       title={<div className='item-title'>Name: </div>}
                       description={<div className='item-description'>{employee.name}</div>}
                     />
                     <List.Item.Meta
+                      className='list-item-description'
                       title={<div className='item-title'>Birth: </div>}
                       description={<div className='item-description'>{employee.birth} </div>}
                     />
                     <List.Item.Meta
+                      className='list-item-description'
                       title={<div className='item-title'>Gender:  </div>}
                       description={
                         <div className='item-description'>

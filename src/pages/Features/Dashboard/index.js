@@ -1,4 +1,4 @@
-import { PageHeader, Space, Divider, Button, Tooltip } from "antd"
+import { PageHeader, Space, Divider, Button, Tooltip, Badge } from "antd"
 import { Calendar } from '../../../components'
 import { useSelector, useDispatch } from "react-redux"
 import dayjs from "dayjs"
@@ -6,8 +6,9 @@ import React, { useEffect } from 'react'
 import { getEmployeeList } from '../../../features/employee/employeeSlice';
 import { setLoadingFalse } from '../../../features/loading/loadingSlice';
 import { AiOutlineUnorderedList, AiOutlineUserAdd } from 'react-icons/ai'
-import { HiOutlineCake, HiOutlineOfficeBuilding } from "react-icons/hi";
+import { RiCakeLine } from "react-icons/ri";
 import { IoAirplaneOutline } from "react-icons/io5";
+import { FiBriefcase } from "react-icons/fi"
 import { Link } from "react-router-dom"
 
 export default function Dashboard() {
@@ -50,7 +51,7 @@ export default function Dashboard() {
   function dateCellRender(value) {
     const listData = getListData(value);
     return (
-      <ul className="events flex-column">
+      <ul className="events flex">
         {listData ?
           <>
             {listData.birth && listData.birth.length ?
@@ -64,7 +65,12 @@ export default function Dashboard() {
                     )
                   })
                 }>
-                <li className='flex align-center'><HiOutlineCake /> <span className='cell-count'>{listData.birth.length}</span> </li>
+                <Badge
+                  count={listData.birth.length}
+                  offset={[-5, 5]}
+                  overflowCount={99}>
+                  <li className='event-item flex-center'><RiCakeLine className='event-icon' /></li>
+                </Badge>
               </Tooltip>
               : null}
             {listData.listStartVacation && listData.listStartVacation.length ?
@@ -78,7 +84,12 @@ export default function Dashboard() {
                     )
                   })
                 }>
-                <li className='flex align-center'><IoAirplaneOutline /> <span className='cell-count'>{listData.listStartVacation.length}</span> </li>
+                <Badge
+                  count={listData.listStartVacation.length}
+                  offset={[-5, 5]}
+                  overflowCount={99}>
+                  <li className='event-item flex-center'><IoAirplaneOutline className='event-icon' /></li>
+                </Badge>
               </Tooltip>
               : null}
             {listData.listEndVacation && listData.listEndVacation.length ?
@@ -92,12 +103,18 @@ export default function Dashboard() {
                     )
                   })
                 }>
-                <li className='flex align-center'><HiOutlineOfficeBuilding /> <span className='cell-count'>{listData.listEndVacation.length}</span> </li>
+                <Badge
+                  count={listData.listEndVacation.length}
+                  offset={[-5, 5]}
+                  overflowCount={99}>
+                  <li className='event-item flex-center'><FiBriefcase className='event-icon' /></li>
+                </Badge>
               </Tooltip>
               : null}
           </>
           :
-          null}
+          null
+        }
       </ul>
     );
   }
@@ -142,13 +159,13 @@ export default function Dashboard() {
       </Space>
       <Space className='calendar-note flex-center' split={<Divider type="vertical" />}>
         <div className='flex align-center'>
-          <HiOutlineCake /> <span>Birthday</span>
+          <RiCakeLine /> <span>Birthday</span>
         </div>
         <div className='flex align-center'>
           <IoAirplaneOutline /> <span>Go on vacation</span>
         </div>
         <div className='flex align-center'>
-          <HiOutlineOfficeBuilding /> <span>Back from vacation</span>
+          <FiBriefcase /> <span>Back from vacation</span>
         </div>
       </Space>
       <Calendar
