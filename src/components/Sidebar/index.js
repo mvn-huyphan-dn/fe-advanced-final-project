@@ -29,7 +29,7 @@ export default function SideBar(props) {
       </Menu>
       <Menu theme="dark" mode="inline" className='logout-item'>
         <Menu.Item key="logout" icon={<AiOutlineLogout />} onClick={props.logout}>
-          Sign out
+          Log out
         </Menu.Item>
       </Menu>
     </>

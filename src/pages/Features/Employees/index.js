@@ -297,7 +297,7 @@ export default function Employees() {
         </div>
       </div>
       <Table
-        dataSource={dataSearch && dataSearch.length ? dataSearch : data}
+        dataSource={searchValue && dataSearch ? dataSearch : data}
         columns={columns}
         rowKey={(record) => record.id}
         pagination={{
@@ -340,6 +340,7 @@ export default function Employees() {
                   const filteredData = data.filter(entry =>
                     entry.name.includes(currentValue)
                   );
+                  console.log(filteredData)
                   setDataSearch(filteredData);
                 }}
               />
