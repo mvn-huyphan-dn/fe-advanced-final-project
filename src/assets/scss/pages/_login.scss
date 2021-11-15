@@ -18,7 +18,11 @@
   }
   .form-login {
     padding: 30px;
-    background-color: map-get($colors, white);
+    background: linear-gradient(
+      136deg,
+      rgb(224, 195, 252) 0%,
+      rgb(142, 197, 252) 100%
+    );
     .form-error {
       color: map-get($colors, txt-error);
     }

@@ -8,17 +8,18 @@ export default function CustomHeader(props) {
   let auth = useAuth()
   const menu = (
     <Menu>
-      <Menu.Item icon={<AiOutlineUser />}>
+      <Menu.Item key='profile' icon={<AiOutlineUser />}>
         <Link to='/profile'>
           Profile
         </Link>
       </Menu.Item>
-      <Menu.Item icon={<AiOutlineSetting />}>
+      <Menu.Item key='setting' icon={<AiOutlineSetting />}>
         <Link to='/setting'>
           Setting
         </Link>
       </Menu.Item>
-      <Menu.Item icon={<AiOutlineLogout />} onClick={props.logout}>
+      <Menu.Divider />
+      <Menu.Item key='logout' icon={<AiOutlineLogout />} onClick={props.logout}>
         Log out
       </Menu.Item>
     </Menu>

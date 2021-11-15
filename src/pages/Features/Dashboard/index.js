@@ -64,11 +64,13 @@ export default function Dashboard() {
                       <div key={`birth-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
                     )
                   })
-                }>
+                }
+              >
                 <Badge
                   count={listData.birth.length}
                   offset={[-5, 5]}
-                  overflowCount={99}>
+                  overflowCount={99}
+                >
                   <li className='event-item flex-center'><RiCakeLine className='event-icon' /></li>
                 </Badge>
               </Tooltip>
@@ -120,19 +122,99 @@ export default function Dashboard() {
   }
 
   function getMonthData(value) {
-    if (value.month() === 8) {
-      return 1394;
+    let listData;
+    let birth = [];
+    let listStartVacation = []
+    let listEndVacation = []
+    employeeData.forEach(item => {
+      if (dayjs(item.birth).get('month') === value.month())
+        birth.push(item.id);
+      if (dayjs(item.startDate).get('month') === value.month()
+        && dayjs(item.startDate).get('year') === value.year())
+        listStartVacation.push(item.id)
+      if (dayjs(item.endDate).get('month') === value.month()
+        && dayjs(item.endDate).get('year') === value.year())
+        listEndVacation.push(item.id)
+    })
+    listData = {
+      birth,
+      listStartVacation,
+      listEndVacation
     }
+    return listData || {};
   }
 
   function monthCellRender(value) {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
+    const lisrDataMonth = getMonthData(value);
+    return (
+      <ul className="events flex">
+        {lisrDataMonth ?
+          <>
+            {lisrDataMonth.birth && lisrDataMonth.birth.length ?
+              <Tooltip
+                placement='top'
+                color='blue'
+                title={
+                  lisrDataMonth.birth.map(e => {
+                    return (
+                      <div key={`birth-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
+                    )
+                  })
+                }
+              >
+                <Badge
+                  count={lisrDataMonth.birth.length}
+                  offset={[-5, 5]}
+                  overflowCount={99}
+                >
+                  <li className='event-item flex-center'><RiCakeLine className='event-icon' /></li>
+                </Badge>
+              </Tooltip>
+              : null}
+            {lisrDataMonth.listStartVacation && lisrDataMonth.listStartVacation.length ?
+              <Tooltip
+                placement='top'
+                color='red'
+                title={
+                  lisrDataMonth.listStartVacation.map(e => {
+                    return (
+                      <div key={`start-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
+                    )
+                  })
+                }>
+                <Badge
+                  count={lisrDataMonth.listStartVacation.length}
+                  offset={[-5, 5]}
+                  overflowCount={99}>
+                  <li className='event-item flex-center'><IoAirplaneOutline className='event-icon' /></li>
+                </Badge>
+              </Tooltip>
+              : null}
+            {lisrDataMonth.listEndVacation && lisrDataMonth.listEndVacation.length ?
+              <Tooltip
+                placement='top'
+                color='green'
+                title={
+                  lisrDataMonth.listEndVacation.map(e => {
+                    return (
+                      <div key={`end-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
+                    )
+                  })
+                }>
+                <Badge
+                  count={lisrDataMonth.listEndVacation.length}
+                  offset={[-5, 5]}
+                  overflowCount={99}>
+                  <li className='event-item flex-center'><FiBriefcase className='event-icon' /></li>
+                </Badge>
+              </Tooltip>
+              : null}
+          </>
+          :
+          null
+        }
+      </ul>
+    );
   }
 
   return (
@@ -143,14 +225,14 @@ export default function Dashboard() {
       </PageHeader>
       <Space className='button-navi-list flex-center' split={<Divider type="vertical" />}>
         <Link className='button-wrapper' to='/employees'>
-          <Tooltip placement="top" title='List employee'>
+          <Tooltip placement="top" title='List employees'>
             <Button className='navi-button flex-center'>
               <AiOutlineUnorderedList />
             </Button>
           </Tooltip>
         </Link>
         <Link className='button-wrapper' to='/add-employee'>
-          <Tooltip placement="top" title='List employee'>
+          <Tooltip placement="top" title='Add employee'>
             <Button className='navi-button flex-center'>
               <AiOutlineUserAdd />
             </Button>
@@ -165,7 +247,7 @@ export default function Dashboard() {
           <IoAirplaneOutline /> <span>Go on vacation</span>
         </div>
         <div className='flex align-center'>
-          <FiBriefcase /> <span>Back from vacation</span>
+          <FiBriefcase /> <span>Back to work</span>
         </div>
       </Space>
       <Calendar
