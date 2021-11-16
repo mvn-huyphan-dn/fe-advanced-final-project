@@ -23,7 +23,6 @@ export default function Pages() {
   let history = useHistory();
   let logout = () => {
     auth.signout(() => {
-      localStorage.removeItem('user')
       openNotification('success', null, 'You have logged out!!!')
       history.replace('/login')
     })

@@ -14,7 +14,6 @@ import { useSelector, useDispatch } from "react-redux"
 import { getEmployeeList, deleteEmployee, deleteMultipleEmployees } from '../../../features/employee/employeeSlice';
 import { setLoadingTrue, setLoadingFalse } from '../../../features/loading/loadingSlice';
 import { GenerateTag, openNotification } from '../../../utils';
-
 import dayjs from 'dayjs';
 
 const { confirm } = Modal
