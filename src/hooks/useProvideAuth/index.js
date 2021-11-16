@@ -15,6 +15,7 @@ export default function useProvideAuth() {
   const signout = cb => {
     return fakeAuth.signout(() => {
       setUser(null);
+      localStorage.removeItem('user')
       cb();
     });
   };

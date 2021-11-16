@@ -70,6 +70,7 @@ export default function Dashboard() {
                   count={listData.birth.length}
                   offset={[-5, 5]}
                   overflowCount={99}
+                  color='blue'
                 >
                   <li className='event-item flex-center'><RiCakeLine className='event-icon' /></li>
                 </Badge>
@@ -108,7 +109,8 @@ export default function Dashboard() {
                 <Badge
                   count={listData.listEndVacation.length}
                   offset={[-5, 5]}
-                  overflowCount={99}>
+                  overflowCount={99}
+                  color='green'>
                   <li className='event-item flex-center'><FiBriefcase className='event-icon' /></li>
                 </Badge>
               </Tooltip>
@@ -145,17 +147,17 @@ export default function Dashboard() {
   }
 
   function monthCellRender(value) {
-    const lisrDataMonth = getMonthData(value);
+    const listDataMonth = getMonthData(value);
     return (
       <ul className="events flex">
-        {lisrDataMonth ?
+        {listDataMonth ?
           <>
-            {lisrDataMonth.birth && lisrDataMonth.birth.length ?
+            {listDataMonth.birth && listDataMonth.birth.length ?
               <Tooltip
                 placement='top'
                 color='blue'
                 title={
-                  lisrDataMonth.birth.map(e => {
+                  listDataMonth.birth.map(e => {
                     return (
                       <div key={`birth-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
                     )
@@ -163,48 +165,50 @@ export default function Dashboard() {
                 }
               >
                 <Badge
-                  count={lisrDataMonth.birth.length}
+                  count={listDataMonth.birth.length}
                   offset={[-5, 5]}
                   overflowCount={99}
+                  color='blue'
                 >
                   <li className='event-item flex-center'><RiCakeLine className='event-icon' /></li>
                 </Badge>
               </Tooltip>
               : null}
-            {lisrDataMonth.listStartVacation && lisrDataMonth.listStartVacation.length ?
+            {listDataMonth.listStartVacation && listDataMonth.listStartVacation.length ?
               <Tooltip
                 placement='top'
                 color='red'
                 title={
-                  lisrDataMonth.listStartVacation.map(e => {
+                  listDataMonth.listStartVacation.map(e => {
                     return (
                       <div key={`start-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
                     )
                   })
                 }>
                 <Badge
-                  count={lisrDataMonth.listStartVacation.length}
+                  count={listDataMonth.listStartVacation.length}
                   offset={[-5, 5]}
                   overflowCount={99}>
                   <li className='event-item flex-center'><IoAirplaneOutline className='event-icon' /></li>
                 </Badge>
               </Tooltip>
               : null}
-            {lisrDataMonth.listEndVacation && lisrDataMonth.listEndVacation.length ?
+            {listDataMonth.listEndVacation && listDataMonth.listEndVacation.length ?
               <Tooltip
                 placement='top'
                 color='green'
                 title={
-                  lisrDataMonth.listEndVacation.map(e => {
+                  listDataMonth.listEndVacation.map(e => {
                     return (
                       <div key={`end-${e}`}>{employeeData[employeeData.findIndex(a => a.id === e)]["name"]}</div>
                     )
                   })
                 }>
                 <Badge
-                  count={lisrDataMonth.listEndVacation.length}
+                  count={listDataMonth.listEndVacation.length}
                   offset={[-5, 5]}
-                  overflowCount={99}>
+                  overflowCount={99}
+                  color='green'>
                   <li className='event-item flex-center'><FiBriefcase className='event-icon' /></li>
                 </Badge>
               </Tooltip>
